@@ -1,4 +1,6 @@
-Objetivo
+<img src="https://www.python.org/static/community_logos/python-logo-generic.svg" title="source: imgur.com" width="300" align="center"/></a>
+
+##Objetivo
 
 O objetivo deste repositório é de realizar o curso do canal 
 curso em vídeo no youtube referente a linguagem Python. 
