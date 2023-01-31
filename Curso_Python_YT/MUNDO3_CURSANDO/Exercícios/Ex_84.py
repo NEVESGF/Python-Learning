@@ -27,7 +27,9 @@ print('-='*20)
 print(f'Ao todo, você cadastrou {qtd} pessoas.')
 print(f'O maior peso foi de {maiorpes}. Peso de ',end='')
 for c in lista:
-    for p in c:
-        if p[1] == maiorpes:
-            print(p[0])
-print(f'\nO menor peso foi de {menorpes}. Peso de ')
+    if c[1] == maiorpes:
+        print(c[0],end=' ')
+print(f'\nO menor peso foi de {menorpes}. Peso de ',end='')
+for d in lista:
+    if d[1] == menorpes:
+        print(d[0],end=' ')
