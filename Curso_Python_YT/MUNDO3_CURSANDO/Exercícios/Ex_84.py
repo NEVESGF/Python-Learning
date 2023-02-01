@@ -33,3 +33,4 @@ print(f'\nO menor peso foi de {menorpes}. Peso de ',end='')
 for d in lista:
     if d[1] == menorpes:
         print(d[0],end=' ')
+        
