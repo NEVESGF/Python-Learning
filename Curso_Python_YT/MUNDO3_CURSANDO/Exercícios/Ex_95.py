@@ -18,7 +18,14 @@ while True:
     jogos.clear()
     jogadores.append(jogador.copy())
     
-    a = str(input('Quer continuar? [S/N ]')).strip().upper()[0]
+    
+    while True:
+        a = str(input('Quer continuar? [S/N ]')).strip().upper()[0]
+        if a in 'SsNn':
+            break
+        elif a != 'S':
+            print('ERRO! Valor não aceitavel.')
+            
     if a in 'Nn':
         break
 print('-='*25)
@@ -35,17 +42,10 @@ while True:
         break
     elif a != 999 and a <= len(jogadores)-1:
         print('-'*50)
-        print('-- LEVANTAMENTO DO JOGADOR')
+        print(f'-- LEVANTAMENTO DO JOGADOR {str(jogadores[a]["nome"]).upper()} --')
 
-        print(jogadores[a]["gols"])
+        for j in range(0,len(jogadores[a]["gols"])):
+            print(f'No {j+1}° jogo fez {jogadores[a]["gols"][j]} gols')
 
     elif a > len(jogadores)-1:
         print(f'ERRO! Não existe jogador com o código {a}!')
-    
-'''print('-='*20)
-    print(f'O jogador {jogador["nome"]} jogou {cont} partidas.')
-    cont = 0
-    for i in jogador['gols']:
-        print(f'   => Na partida {cont}, fez {i} gols.')
-        cont +=1'''
-#print(jogadores)
