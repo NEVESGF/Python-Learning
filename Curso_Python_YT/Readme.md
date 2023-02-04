@@ -17,6 +17,6 @@ realizados com comentários dos quais foram pertinentes para o
 meu conhecimento
 
 Todos os exercicios e aulas estão sob dominio e criação do canal
-curso em vídeo: https://www.youtube.com/playlist?list=PLvE-ZAFRgX8hnECDn1v9HNTI71veL3oW0
+curso em vídeo:https://www.youtube.com/playlist?list=PLvE-ZAFRgX8hnECDn1v9HNTI71veL3oW0 
 
 Espero que esse repositório possa auxilia-lo em seu caminho.
