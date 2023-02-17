@@ -2,14 +2,14 @@ from time import sleep
 
 def menu():
     try:
-        global x
+        #global x
         while True:
             print('-'*40)
             print(f'{"MENU PRINCIPAL":^40}')
             print('-'*40)
-            print(f'\033[0;33m1 - \033[0;34mVer pessoas cadastradas\033[m')
-            print(f'\033[0;33m2 - \033[0;34mCadastrar nova pessoa\033[m')
-            print(f'\033[0;33m3 - \033[0;34mSair do Sistema')
+            print('\033[0;33m1 - \033[0;34mVer pessoas cadastradas\033[m')
+            print('\033[0;33m2 - \033[0;34mCadastrar nova pessoa\033[m')
+            print('\033[0;33m3 - \033[0;34mSair do Sistema')
             print('-'*40)
         
             x = str(input('\033[01;33mSua Opção: \033[m'))
@@ -49,7 +49,7 @@ def cadastrar():
 
 
 def cadastrados():
-    with open('lista.txt','r') as lista:
+    with open('lista.txt','r',encoding='utf-8') as lista:
         print(lista.read())
         lista.close()
     sleep(0.5)
