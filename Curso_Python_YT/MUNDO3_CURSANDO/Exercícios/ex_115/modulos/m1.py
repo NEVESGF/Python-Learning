@@ -42,16 +42,29 @@ def cadastrar():
         else:
             print('\033[0;31mDigite um número inteiro válido\033[m')
     
-    with open('lista.txt','w',encoding="utf-8") as lista:
-        lista.write(f'{nome} {idade} \n')
-        lista.close()
+    with open('lista.txt','r+',encoding="utf-8") as lista:
+    
+        my_list = []
+        for i in lista.readlines():
+            my_list.append(i.split(";"))
+
+        lista.write(f"\n{nome};{idade}")
+        
     sleep(0.7)
 
 
 def cadastrados():
-    with open('lista.txt','r',encoding='utf-8') as lista:
-        print(lista.read())
-        lista.close()
+    with open("lista.txt","r",encoding='utf-8') as lista:
+        my_list = []
+        for i in lista.readlines():
+            my_list.append(i.split(";"))
+    c = 1
+    for n in my_list:
+        if c < len(my_list):
+            print(f"{n[0]:.<30} {n[1]}",end='')
+        elif c == len(my_list):
+            print(f"{n[0]:.<30} {n[1]}")
+        c += 1
     sleep(0.5)
 
 def sair():

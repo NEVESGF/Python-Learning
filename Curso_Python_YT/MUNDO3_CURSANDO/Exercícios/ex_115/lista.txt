@@ -1,0 +1,11 @@
+Beatriz Pereira;23
+Guilherme Castro;31
+Juliana Santos;45
+Bruno Costa;29
+Mariana Carvalho;26
+Gustavo Souza;39
+Fernanda Almeida;32
+Lucas Ribeiro;21
+Isabela Lima;37
+Rafaela Oliveira;28
+Mateus Ribeiro;27
