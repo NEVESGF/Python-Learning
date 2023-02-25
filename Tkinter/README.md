@@ -8,6 +8,7 @@ O Tkinter vem pré-instalado com a maioria das distribuições de Python, então
 
 Recursos e tutoriais
 
+    Curso YT: https://www.youtube.com/playlist?list=PLqx8fDb-FZDFznZcXb_u_NyiQ7Nai674-
     O tutorial oficial do Tkinter: https://docs.python.org/3/library/tk.html
     TkDocs: https://tkdocs.com/index.html - uma documentação completa sobre o Tkinter com exemplos e explicações detalhadas.
     Programação GUI com Tkinter: https://www.python-course.eu/python_tkinter.php - um tutorial abrangente e prático para começar com o Tkinter.
