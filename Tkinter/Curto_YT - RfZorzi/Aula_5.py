@@ -39,58 +39,57 @@ class Application():
 
     def widgets_frame1(self):
         ### Criação do botão limpar
-        self.bt_limpar = Button(self.frame_1, text = "Limpar")
+        self.bt_limpar = Button(self.frame_1, text = "Limpar",bd=2,bg='#107bd2',fg='white',font=('verdana',8,'bold'))
         self.bt_limpar.place(relx = 0.2 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão buscar
-        self.bt_buscar = Button(self.frame_1, text = "Buscar")
+        self.bt_buscar = Button(self.frame_1, text = "Buscar",bd=2,bg='#107bd2',fg='white',font=('verdana',8,'bold'))
         self.bt_buscar.place(relx = 0.3 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão novo
-        self.bt_novo = Button(self.frame_1, text = "Novo")
+        self.bt_novo = Button(self.frame_1, text = "Novo",bd=2,bg='#107bd2',fg='white',font=('verdana',8,'bold'))
         self.bt_novo.place(relx = 0.6 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão alternar
-        self.bt_alternar = Button(self.frame_1, text = "Alternar")
+        self.bt_alternar = Button(self.frame_1, text = "Alternar",bd=2,bg='#107bd2',fg='white',font=('verdana',8,'bold'))
         self.bt_alternar.place(relx = 0.7 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão apagar
-        self.bt_apagar = Button(self.frame_1, text = "Apagar")
+        self.bt_apagar = Button(self.frame_1, text = "Apagar",bd=2,bg='#107bd2',fg='white',font=('verdana',8,'bold'))
         self.bt_apagar.place(relx = 0.8 , rely= 0.1, relwidth=0.1, relheight=0.16)
-
 
         # AULA 4 DAQUI EM DIANTE
 
         #  Criação da Label e entrada do código
-        self.lb_codigo = Label(self.frame_1, text = "Código")
-        self.lb_codigo.place(relx= 0.05, rely=0.05)
+        self.lb_codigo = Label(self.frame_1, text = "Código",bg='#dfe3ee',fg='#107db2') #Label cria uma nota na tela
+        self.lb_codigo.place(relx= 0.05, rely=0.05) 
 
-        self.codigo_entry = Entry(self.frame_1)
+        self.codigo_entry = Entry(self.frame_1) #Cria uma caixa de texto (input)
         self.codigo_entry.place(relx= 0.05, rely=0.15, relwidth=0.1)
 
         #  Criação da Label e entrada do nome
-        self.lb_nome = Label(self.frame_1, text = "Nome")
+        self.lb_nome = Label(self.frame_1, text = "Nome",bg='#dfe3ee',fg='#107db2')
         self.lb_nome.place(relx= 0.05, rely=0.35)
 
         self.nome_entry = Entry(self.frame_1)
         self.nome_entry.place(relx= 0.05, rely=0.45, relwidth=0.85, relheight=0.12)
 
         #  Criação da Label e entrada do telefone
-        self.lb_telefone = Label(self.frame_1, text = "Telefone")
+        self.lb_telefone = Label(self.frame_1, text = "Telefone",bg='#dfe3ee',fg='#107db2')
         self.lb_telefone.place(relx= 0.05, rely=0.60)
 
         self.nome_telefone = Entry(self.frame_1)
         self.nome_telefone.place(relx= 0.05, rely=0.70, relwidth=0.4, relheight=0.12)
 
         #  Criação da Label e entrada do cidade
-        self.lb_nome = Label(self.frame_1, text = "Cidade")
+        self.lb_nome = Label(self.frame_1, text = "Cidade",bg='#dfe3ee',fg='#107db2')
         self.lb_nome.place(relx= 0.5, rely=0.6)
 
         self.nome_entry = Entry(self.frame_1)
         self.nome_entry.place(relx= 0.5, rely=0.7, relwidth=0.25, relheight=0.12)
 
         #  Criação da Label e entrada do Estado
-        self.lb_nome = Label(self.frame_1, text = "Estado")
+        self.lb_nome = Label(self.frame_1, text = "Estado",bg='#dfe3ee',fg='#107db2')
         self.lb_nome.place(relx= 0.8, rely=0.6)
 
         self.nome_entry = Entry(self.frame_1)
