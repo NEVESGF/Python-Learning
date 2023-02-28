@@ -1,8 +1,11 @@
 from tkinter import *
+import tkinter.ttk
 
 root = Tk()
 
 class Application(): 
+
+    
     
     # https://docs.python.org/3/tutorial/classes.html
     # https://www.hackerearth.com/practice/python/object-oriented-programming/classes-and-objects-i/tutorial/
@@ -88,11 +91,18 @@ class Application():
         self.nome_entry = Entry(self.frame_1)
         self.nome_entry.place(relx= 0.5, rely=0.7, relwidth=0.25, relheight=0.12)
 
+
+        ### NÃO PRESENTE NO CURSO, ADICIONADO POR CONTA
+
         #  Criação da Label e entrada do Estado
         self.lb_nome = Label(self.frame_1, text = "Estado",bg='#dfe3ee',fg='#107db2')
-        self.lb_nome.place(relx= 0.8, rely=0.6)
+        self.lb_nome.place(relx= 0.795, rely=0.6)
 
-        self.nome_entry = Entry(self.frame_1)
-        self.nome_entry.place(relx= 0.8, rely=0.7, relwidth=0.1, relheight=0.12)
+        self.options = StringVar(root) #Opção selecionada pelo usuário será definida como self.options
+        self.estados = ("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO")
+        self.nome_entry = tkinter.ttk.Combobox(root,textvariable=self.options,values=self.estados)
+        self.nome_entry.place(relx= 0.78, rely=0.335, relwidth=0.1, relheight=0.05)
+
+        ### ATÉ AQUI
 
 Application()
