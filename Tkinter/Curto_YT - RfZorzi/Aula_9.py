@@ -16,7 +16,7 @@ class Funcs():
         self.cidade_entry.delete(0,END)
         self.estado_entry.delete(0,END)
     def conecta_bd(self):
-        self.conn = sqlite3.connect("cllientes.bd"); print("Conectando ao banco de dados")
+        self.conn = sqlite3.connect("clientes.bd"); print("Conectando ao banco de dados")
         self.cursor = self.conn.cursor()
     def desconectar_bd(self):
         self.conn.close(); print("Desconectado do banco de dados")
