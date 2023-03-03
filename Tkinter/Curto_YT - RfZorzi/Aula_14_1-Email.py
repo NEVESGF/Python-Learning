@@ -74,6 +74,7 @@ class Funcs():
         self.telefone_entry.delete(0,END)
         self.cidade_entry.delete(0,END)
         self.estado_entry.delete(0,END)
+        self.email_entry.delete(0,END)
     def conecta_bd(self):
         self.conn = sqlite3.connect("clientes.bd"); print("Conectando ao banco de dados")
         self.cursor = self.conn.cursor()
@@ -89,7 +90,8 @@ class Funcs():
             nome_cliente CHAR(40) NOT NULL,
             telefone INTEGER(20),
             cidade CHAR(40),
-            estado CHAR(10)
+            estado CHAR(10),
+            email CHAR(20)
         );
         """)
         self.conn.commit(); print("Banco de dados criado")
@@ -100,12 +102,13 @@ class Funcs():
         self.telefone = self.telefone_entry.get()
         self.cidade = self.cidade_entry.get()
         self.estado = self.estado_entry.get()
+        self.email = self.email_entry.get()
     def add_cliente(self):
         self.variaveis()
         self.conecta_bd()
 
-        self.cursor.execute(""" INSERT INTO clientes (nome_cliente, telefone, cidade, estado)
-            VALUES (?, ?, ?, ?)""", (self.nome, self.telefone, self.cidade, self.estado))
+        self.cursor.execute(""" INSERT INTO clientes (nome_cliente, telefone, cidade, estado, email)
+            VALUES (?, ?, ?, ?, ?)""", (self.nome, self.telefone, self.cidade, self.estado, self.email))
         self.conn.commit()
         self.desconectar_bd()
         self.select_lista()
@@ -113,7 +116,7 @@ class Funcs():
     def select_lista(self):
         self.listaCli.delete(*self.listaCli.get_children())
         self.conecta_bd()
-        lista = self.cursor.execute(""" SELECT cod, nome_cliente, telefone, cidade, estado FROM clientes
+        lista = self.cursor.execute(""" SELECT cod, nome_cliente, telefone, cidade, estado, email FROM clientes
             ORDER BY nome_cliente ASC;""")
         for i in lista:
             self.listaCli.insert("", END, values=i)
@@ -123,12 +126,13 @@ class Funcs():
         self.listaCli.selection()
 
         for n in self.listaCli.selection():
-            col1, col2, col3, col4, col5 = self.listaCli.item(n,'values')
+            col1, col2, col3, col4, col5,col6 = self.listaCli.item(n,'values')
             self.codigo_entry.insert(END,col1)
             self.nome_entry.insert(END,col2)
             self.telefone_entry.insert(END,col3)
             self.cidade_entry.insert(END,col4)
             self.estado_entry.insert(END,col5)
+            self.email_entry.insert(END,col6)
     def deleta_cliente(self):
         self.variaveis()
         self.conecta_bd()
@@ -140,8 +144,8 @@ class Funcs():
     def alterar_clientes(self):
         self.variaveis()
         self.conecta_bd()
-        self.cursor.execute("""UPDATE clientes SET nome_cliente = ?, telefone = ?, cidade = ?, estado = ?
-            WHERE cod = ? """, (self.nome, self.telefone, self.cidade, self.estado, self.codigo))
+        self.cursor.execute("""UPDATE clientes SET nome_cliente = ?, telefone = ?, cidade = ?, estado = ?, email = ?
+            WHERE cod = ? """, (self.nome, self.telefone, self.cidade, self.estado, self.email, self.codigo))
         self.conn.commit()
         self.desconectar_bd()
         self.select_lista()
@@ -153,7 +157,7 @@ class Funcs():
         self.nome_entry.insert(END,'%')
         nome = self.nome_entry.get()
         self.cursor.execute(
-            """ SELECT cod, nome_cliente, telefone, cidade, estado FROM clientes
+            """ SELECT cod, nome_cliente, telefone, cidade, estado, email FROM clientes
             WHERE nome_cliente LIKE '%s' ORDER BY nome_cliente ASC """ % nome)
         buscanomeCli = self.cursor.fetchall()
         for i in buscanomeCli:
@@ -273,7 +277,7 @@ class Application(Funcs,Relatorios):
         ### ATÉ AQUI
     # AULA 6 DAQUI EM DIANTE
     def lista_frame2(self):
-        self.listaCli = ttk.Treeview(self.frame_2, height=3, columns=("col1","Col2","col3","col4","col5"))
+        self.listaCli = ttk.Treeview(self.frame_2, height=3, columns=("col1","Col2","col3","col4","col5","col6"))
         
         ### Definição do nome de cada uma das colunas criadas anteriormente na Treeview
         self.listaCli.heading("#0",text="")
@@ -282,6 +286,7 @@ class Application(Funcs,Relatorios):
         self.listaCli.heading("#3",text="Telefone")
         self.listaCli.heading("#4",text="Cidade")
         self.listaCli.heading("#5",text="Estado")
+        self.listaCli.heading("#6",text="E-mail")
 
         ### Definição do tamanho de cada uma das colunas
         self.listaCli.column("#0",width=0,stretch=NO)
@@ -290,6 +295,7 @@ class Application(Funcs,Relatorios):
         self.listaCli.column("#3",width=125)
         self.listaCli.column("#4",width=125)
         self.listaCli.column("#5",width=100)
+        self.listaCli.column("#6",width=100)
 
         ### Posicionando a lista no frame 2
         self.listaCli.place(relx=0.02,rely=0.05, relwidth=0.95,relheight=0.9)
