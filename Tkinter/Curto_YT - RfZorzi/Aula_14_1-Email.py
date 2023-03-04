@@ -277,7 +277,7 @@ class Application(Funcs,Relatorios):
         ### ATÉ AQUI
     # AULA 6 DAQUI EM DIANTE
     def lista_frame2(self):
-        self.listaCli = ttk.Treeview(self.frame_2, height=3, columns=("col1","Col2","col3","col4","col5","col6"))
+        self.listaCli = ttk.Treeview(self.frame_2, height=3, columns=("col1","col2","col3","col4","col5","col6"))
         
         ### Definição do nome de cada uma das colunas criadas anteriormente na Treeview
         self.listaCli.heading("#0",text="")
@@ -285,24 +285,28 @@ class Application(Funcs,Relatorios):
         self.listaCli.heading("#2",text="Nome")
         self.listaCli.heading("#3",text="Telefone")
         self.listaCli.heading("#4",text="Cidade")
-        self.listaCli.heading("#5",text="Estado")
+        self.listaCli.heading("#5",text="UF")
         self.listaCli.heading("#6",text="E-mail")
 
         ### Definição do tamanho de cada uma das colunas
         self.listaCli.column("#0",width=0,stretch=NO)
         self.listaCli.column("#1",width=40)
-        self.listaCli.column("#2",width=200)
-        self.listaCli.column("#3",width=125)
+        self.listaCli.column("#2",width=160)
+        self.listaCli.column("#3",width=160)
         self.listaCli.column("#4",width=125)
-        self.listaCli.column("#5",width=100)
-        self.listaCli.column("#6",width=100)
+        self.listaCli.column("#5",width=50)
+        self.listaCli.column("#6",width=250)
 
         ### Posicionando a lista no frame 2
         self.listaCli.place(relx=0.02,rely=0.05, relwidth=0.95,relheight=0.9)
 
-        self.scrollLista = Scrollbar(self.frame_2, orient='vertical')
+        self.scrollLista = Scrollbar(self.frame_2, orient='vertical',command=self.listaCli.yview)
         self.listaCli.configure(yscrollcommand=self.scrollLista.set)
         self.scrollLista.place(relx=0.97, rely=0.05, relwidth=0.02, relheight=0.9)
+
+        self.scrollLista2 = Scrollbar(self.frame_2, orient='horizontal',command=self.listaCli.xview)
+        self.listaCli.configure(xscrollcommand=self.scrollLista2.set)
+        self.scrollLista2.place(relx=0.02, rely=0.90, relwidth=0.95, relheight=0.05)
 
         self.listaCli.bind("<Double-1>",self.onDoubleClick)
 
