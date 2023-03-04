@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import sqlite3
 
+from time import sleep
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.pdfbase import pdfmetrics   
@@ -76,10 +77,11 @@ class Funcs():
         self.estado_entry.delete(0,END)
         self.email_entry.delete(0,END)
     def conecta_bd(self):
-        self.conn = sqlite3.connect("clientes.bd"); print("Conectando ao banco de dados")
+        self.conn = sqlite3.connect("clientes.bd"); Label(root,text="Conectado ao banco de dados...",bg="#1e3843", font=("Arial", 10)).place(relx=0.65,rely=0.96) #print("Conectando ao banco de dados")
+
         self.cursor = self.conn.cursor()
     def desconectar_bd(self):
-        self.conn.close(); print("Desconectado do banco de dados")
+        self.conn.close(); Label(root,text="Desconectado do banco de dados...",bg="#1e3843", font=("Arial", 10)).place(relx=0.65,rely=0.96) #print("Desconectado do banco de dados")
     def montaTabelas(self):
 
         self.conecta_bd()
@@ -94,7 +96,7 @@ class Funcs():
             email CHAR(20)
         );
         """)
-        self.conn.commit(); print("Banco de dados criado")
+        self.conn.commit(); Label(root,text="Banco de dados criado...",bg="#1e3843", font=("Arial", 10)).place(relx=0.65,rely=0.96) #print("Banco de dados criado")
         self.desconectar_bd()
     def variaveis(self):
         self.codigo = self.codigo_entry.get()
@@ -200,79 +202,98 @@ class Application(Funcs,Relatorios):
         self.frame_2.place(relx= 0.02, rely=0.5, relwidth = 0.96, relheight = 0.46) # Funciona de
     # AULA 3 DAQUI EM DIANTE
     def widgets_frame1(self):
+
+        self.abas = ttk.Notebook(self.frame_1)
+        self.aba1 = Frame(self.abas)
+        self.aba2 = Frame(self.abas)
+
+        self.aba1.configure(background="#dfe3ee")
+        self.aba2.configure(background="#dfe3ee")
+
+        self.abas.add(self.aba1,text = "Cadastro e Visualização")
+        self.abas.add(self.aba2, text = "Aba 2")
+
+        self.abas.place(relx=0, rely=0,relwidth=0.98, relheight=0.98)
+
+        #self.canvas_bt = Canvas(self.frame_1, bd=0, bg='black', highlightbackground='gray',highlightthickness=3)
+        #self.canvas_bt.place(relx=0.19,rely=0.08,relwidth=0.22,relheight=0.19)
+
         ### Criação do botão limpar
-        self.bt_limpar = Button(self.frame_1, text = "Limpar",bd=2,bg='#107bd2',fg='white',
-                                font=('verdana',8,'bold'),command=self.limpa_tela)
+        self.bt_limpar = Button(self.aba1, text = "Limpar",bd=2,bg='#107bd2',fg='white',
+                                font=('verdana',8,'bold'),command=self.limpa_tela,)
         self.bt_limpar.place(relx = 0.2 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão buscar
-        self.bt_buscar = Button(self.frame_1, text = "Buscar",bd=2,bg='#107bd2',fg='white',
+        self.bt_buscar = Button(self.aba1, text = "Buscar",bd=2,bg='#107bd2',fg='white',
                                 font=('verdana',8,'bold'),command=self.busca_cliente)
         self.bt_buscar.place(relx = 0.3 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão novo
-        self.bt_novo = Button(self.frame_1, text = "Novo",bd=2,bg='#107bd2',fg='white',
+        self.bt_novo = Button(self.aba1, text = "Novo",bd=2,bg='#107bd2',fg='white',
                               font=('verdana',8,'bold'),command=self.add_cliente)
         self.bt_novo.place(relx = 0.6 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão alternar
-        self.bt_alternar = Button(self.frame_1, text = "Alternar",bd=2,bg='#107bd2',fg='white',
+        self.bt_alternar = Button(self.aba1, text = "Alternar",bd=2,bg='#107bd2',fg='white',
                                   font=('verdana',8,'bold'),command=self.alterar_clientes)
         self.bt_alternar.place(relx = 0.7 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão apagar
-        self.bt_apagar = Button(self.frame_1, text = "Apagar",bd=2,bg='#107bd2',fg='white',
+        self.bt_apagar = Button(self.aba1, text = "Apagar",bd=2,bg='#107bd2',fg='white',
                                 font=('verdana',8,'bold'),command=self.deleta_cliente)
         self.bt_apagar.place(relx = 0.8 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         # AULA 4 DAQUI EM DIANTE
 
         #  Criação da Label e entrada do código
-        self.lb_codigo = Label(self.frame_1, text = "Código",bg='#dfe3ee',fg='#107db2') #Label cria uma nota na tela
+        self.lb_codigo = Label(self.aba1, text = "Código",bg='#dfe3ee',fg='#107db2') #Label cria uma nota na tela
         self.lb_codigo.place(relx= 0.05, rely=0.05) 
 
-        self.codigo_entry = Entry(self.frame_1) #Cria uma caixa de texto (input)
+        self.codigo_entry = Entry(self.aba1) #Cria uma caixa de texto (input)
         self.codigo_entry.place(relx= 0.05, rely=0.15, relwidth=0.1)
 
         #  Criação da Label e entrada do nome
-        self.lb_nome = Label(self.frame_1, text = "Nome",bg='#dfe3ee',fg='#107db2')
+        self.lb_nome = Label(self.aba1, text = "Nome",bg='#dfe3ee',fg='#107db2')
         self.lb_nome.place(relx= 0.05, rely=0.35)
 
-        self.nome_entry = Entry(self.frame_1)
+        self.nome_entry = Entry(self.aba1)
         self.nome_entry.place(relx= 0.05, rely=0.45, relwidth=0.4, relheight=0.12)
 
         #  Criação da Label e entrada do E-mail
-        self.lb_email = Label(self.frame_1, text = "E-mail",bg='#dfe3ee',fg='#107db2')
+        self.lb_email = Label(self.aba1, text = "E-mail",bg='#dfe3ee',fg='#107db2')
         self.lb_email.place(relx= 0.5, rely=0.35)
 
-        self.email_entry = Entry(self.frame_1)
+        self.email_entry = Entry(self.aba1)
         self.email_entry.place(relx= 0.5, rely=0.45, relwidth=0.401, relheight=0.12)
 
         #  Criação da Label e entrada do telefone
-        self.lb_telefone = Label(self.frame_1, text = "Telefone",bg='#dfe3ee',fg='#107db2')
+        self.lb_telefone = Label(self.aba1, text = "Telefone",bg='#dfe3ee',fg='#107db2')
         self.lb_telefone.place(relx= 0.05, rely=0.60)
 
-        self.telefone_entry = Entry(self.frame_1)
+        self.telefone_entry = Entry(self.aba1)
         self.telefone_entry.place(relx= 0.05, rely=0.70, relwidth=0.4, relheight=0.12)
 
         #  Criação da Label e entrada do cidade
-        self.lb_cidade = Label(self.frame_1, text = "Cidade",bg='#dfe3ee',fg='#107db2')
+        self.lb_cidade = Label(self.aba1, text = "Cidade",bg='#dfe3ee',fg='#107db2')
         self.lb_cidade.place(relx= 0.5, rely=0.6)
 
-        self.cidade_entry = Entry(self.frame_1)
+        self.cidade_entry = Entry(self.aba1)
         self.cidade_entry.place(relx= 0.5, rely=0.7, relwidth=0.25, relheight=0.12)
 
 
         ### NÃO PRESENTE NO CURSO, ADICIONADO POR CONTA
 
         #  Criação da Label e entrada do Estado
-        self.lb_estado = Label(self.frame_1, text = "Estado",bg='#dfe3ee',fg='#107db2')
+        self.lb_estado = Label(self.aba1, text = "Estado",bg='#dfe3ee',fg='#107db2')
         self.lb_estado.place(relx= 0.795, rely=0.6)
 
         self.options = StringVar(root) #Opção selecionada pelo usuário será definida como self.options
         self.estados = ("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO")
-        self.estado_entry = ttk.Combobox(root,textvariable=self.options,values=self.estados)
-        self.estado_entry.place(relx= 0.78, rely=0.335, relwidth=0.1, relheight=0.05)
+        self.estado_entry = ttk.Combobox(self.aba1,textvariable=self.options,values=self.estados)
+        self.estado_entry.place(relx= 0.8, rely=0.7, relwidth=0.10, relheight=0.119)
+
+
+        
 
         ### ATÉ AQUI
     # AULA 6 DAQUI EM DIANTE
