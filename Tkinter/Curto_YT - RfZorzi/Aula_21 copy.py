@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import sqlite3
 import pwd, os
 import base64
@@ -283,30 +284,31 @@ class Application(Funcs,Relatorios):
         ### Criação do botão limpar
         Label(root,text= "Connected user: " + pwd.getpwuid(os.getuid()).pw_name,bg="#1e3843", font=("Arial", 10)).place(relx=0.02,rely=0.96)
 
-        self.bt_limpar = Button(self.aba1, text = "Limpar",bd=2,bg='#107bd2',fg='white',
+        self.bt_limpar = Button(self.aba1, text = "Limpar\n (F2)",bd=2,bg='#107bd2',fg='white',
                                 font=('verdana',8,'bold'),command=self.limpa_tela,)
         self.bt_limpar.place(relx = 0.2 , rely= 0.1, relwidth=0.1, relheight=0.16)
-
+        
         ### Criação do botão buscar
-        self.bt_buscar = Button(self.aba1, text = "Buscar",bd=2,bg='#107bd2',fg='white',
+        self.bt_buscar = Button(self.aba1, text = "Buscar\n (F3)",bd=2,bg='#107bd2',fg='white',
                                 font=('verdana',8,'bold'),command=self.busca_cliente)
         self.bt_buscar.place(relx = 0.3 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão novo
-        self.bt_novo = Button(self.aba1, text = "Novo",bd=2,bg='#107bd2',fg='white',
+        self.bt_novo = Button(self.aba1, text = "Novo\n (F4)",bd=2,bg='#107bd2',fg='white',
                               font=('verdana',8,'bold'),command=self.add_cliente)
         self.bt_novo.place(relx = 0.6 , rely= 0.1, relwidth=0.1, relheight=0.16)
+        
 
         ### Criação do botão alternar
-        self.bt_alternar = Button(self.aba1, text = "Alternar",bd=2,bg='#107bd2',fg='white',
+        self.bt_alternar = Button(self.aba1, text = "Alterar\n (F5)",bd=2,bg='#107bd2',fg='white',
                                   font=('verdana',8,'bold'),command=self.alterar_clientes)
         self.bt_alternar.place(relx = 0.7 , rely= 0.1, relwidth=0.1, relheight=0.16)
 
         ### Criação do botão apagar
-        self.bt_apagar = Button(self.aba1, text = "Apagar",bd=2,bg='#107bd2',fg='white',
+        self.bt_apagar = Button(self.aba1, text = "Apagar\n (Del)",bd=2,bg='#107bd2',fg='white',
                                 font=('verdana',8,'bold'),command=self.deleta_cliente)
         self.bt_apagar.place(relx = 0.8 , rely= 0.1, relwidth=0.1, relheight=0.16)
-
+        
         
 
         # AULA 4 DAQUI EM DIANTE
@@ -346,6 +348,14 @@ class Application(Funcs,Relatorios):
         self.cidade_entry = Entry(self.aba1)
         self.cidade_entry.place(relx= 0.5, rely=0.7, relwidth=0.25, relheight=0.12)
 
+
+        self.root.bind("<F2>", lambda event: self.limpa_tela())
+        self.root.bind("<F4>",lambda event: self.add_cliente())
+        self.root.bind("<F3>",lambda event: self.busca_cliente())
+        self.root.bind("<F5>",lambda event: self.alterar_clientes())
+        self.root.bind("<Delete>",lambda event:self.deleta_cliente())
+        self.root.bind("<F12>",lambda event: self.gerarRelatCliente())
+        self.root.bind("<Escape>",lambda event: self.root1.destroy() if messagebox.askquestion("Encerrar", "Deseja realmente encerrar o programa?") == "yes" else "")
 
         ### NÃO PRESENTE NO CURSO, ADICIONADO POR CONTA
 
@@ -416,6 +426,6 @@ class Application(Funcs,Relatorios):
 
         filemenu.add_command(label="Sair", command= Quit)
         filemenu.add_command(label="Limpa Cliente", command=self.limpa_tela)
-        filemenu2.add_command(label="Relatório PDF", command=self.gerarRelatCliente)
+        filemenu2.add_command(label="Relatório PDF (F12)", command=self.gerarRelatCliente)
     
 Application()
