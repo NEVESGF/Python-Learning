@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import sqlite3
-import pwd, os
+#import pwd, os
 import base64
 
 from time import sleep
@@ -16,6 +16,7 @@ import datetime
 
 root1 = Tk()
 
+username = ""
 
 class Relatorios():
     def printCliente(self):
@@ -234,7 +235,7 @@ class Application(Funcs,Relatorios):
             
             #Entries
             
-            self.usuario_entry = Entry(root1,textvariable= StringVar(value=pwd.getpwuid(os.getuid()).pw_name))
+            self.usuario_entry = Entry(root1)
             self.usuario_entry.place(relx=0.42,rely=0.75, relwidth=0.4, relheight=0.09)
             self.senha_entry = Entry(root1,show="*")
             self.senha_entry.place(relx=0.42,rely=0.88, relwidth=0.4, relheight=0.09)
@@ -282,7 +283,7 @@ class Application(Funcs,Relatorios):
         #self.canvas_bt.place(relx=0.19,rely=0.08,relwidth=0.22,relheight=0.19)
 
         ### Criação do botão limpar
-        Label(root,text= "Connected user: " + pwd.getpwuid(os.getuid()).pw_name,bg="#1e3843", font=("Arial", 10)).place(relx=0.02,rely=0.96)
+        Label(root,text= "Connected user: " + username,bg="#1e3843", font=("Arial", 10)).place(relx=0.02,rely=0.96)
 
         self.bt_limpar = Button(self.aba1, text = "Limpar\n (F2)",bd=2,bg='#107bd2',fg='white',
                                 font=('verdana',8,'bold'),command=self.limpa_tela,)
