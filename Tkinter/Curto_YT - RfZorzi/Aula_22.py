@@ -15,8 +15,6 @@ import datetime
 
 root1 = Tk()
 
-username = ""
-
 class Relatorios():
     def printCliente(self):
         webbrowser.open("cliente.pdf")
@@ -201,22 +199,27 @@ class Application(Funcs,Relatorios):
         self.status.place(relx=0.259,rely=0.67)
 
     def login_try(self):
+        global username
         self.senha = self.senha_entry.get()
+        username = self.usuario_entry.get()
         senhakey = ["12345"]
-        if self.senha == senhakey[0]:
+        if self.senha == senhakey[0] and username != "":
             self.status.destroy()
-            self.status = Label(self.root1,text='Acesso Liberado',bg='green')
-            self.status.place(relx=0.359,rely=0.67)
+            self.status = Label(self.root1,text='Digite o Usuário e Senha',bg="#1e3843",fg='white')
+            self.status.place(relx=0.259,rely=0.67)
             self.senha_entry.delete(0,END)
             self.root1.withdraw()
             self.telaprincipal()
             return True
-        else:
+        elif username == "":
+            messagebox.showerror('Atenção','Usuário e Senha são obrigatórios para continuar !')
+        elif self.senha != senhakey[0]:
             self.status.destroy()
             self.status = Label(self.root1,text='Senha Incorreta!',bg="#1e3843",fg='red')
             self.status.place(relx=0.359,rely=0.67)
             self.senha_entry.delete(0,END)
             return False
+        
 
     def telaprincipal(self):
             global root
@@ -240,8 +243,8 @@ class Application(Funcs,Relatorios):
 
             #Labels
             Label(root1,text="Usuário:",bg="#1e3843",fg='white').place(relx=0.17,rely=0.75,width=60,relheight=0.09)
-            Label(root1,text="Senha  :",bg="#1e3843",fg='white').place(relx=0.17,rely=0.88,width=60,relheight=0.09)
-            
+            Label(root1,text="Senha  :",bg="#1e3843",fg='white').place(relx=0.17,rely=0.88,width=60,relheight=0.09) 
+            #self.usuario_entry
             #Entries
             
             self.usuario_entry = Entry(root1)
@@ -249,6 +252,7 @@ class Application(Funcs,Relatorios):
             self.senha_entry = Entry(root1,show="*")
             self.senha_entry.place(relx=0.42,rely=0.88, relwidth=0.4, relheight=0.09)
             self.senha_entry.bind('<Return>', lambda event: self.login_try())
+            self.usuario_entry.bind('<Return>', lambda event: self.login_try())
 
 
     def tela(self):
