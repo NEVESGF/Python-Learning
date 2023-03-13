@@ -3,6 +3,7 @@ from tkinter import messagebox
 import base64
 from PIL import Image, ImageTk
 import io
+import jiramain
 
 root = Tk()
 
@@ -13,6 +14,7 @@ class Application():
         self.janela_principal()
         self.frames()
         self.widgets()
+        #self.Jira_Main()
         root.mainloop()
 
     def janela_principal(self):
@@ -26,9 +28,10 @@ class Application():
 
         self.frame1 = Frame(root,border=4,bg='white')
         self.frame1.place(relx=0.02,rely=0.185,relwidth=0.96,relheight=0.53)
-        self.label_text = StringVar()
-        self.label = Label(self.frame1,textvariable=self.label_text,anchor='w',justify='left')
-        self.label.pack(fill='both')
+        self.label_text = StringVar(value="JiraBot: Seja bem vindo ao JiraBot! Faça uma pergunta para iniciar.")
+        self.label = Label(self.frame1,textvariable=self.label_text,anchor='nw',justify='left')
+        self.label.config(wraplength=800)
+        self.label.pack(fill='both',expand=True)
 
         self.frame2 = Frame(root,border=4,bg='white')
         Label(self.root,text='Type Here.:',background="#e4e4e4").place(relx=0.02,rely=0.725)
@@ -37,18 +40,27 @@ class Application():
         self.f_text.pack(fill='both')
         self.f_text.bind("<Return>", self.update_label)
 
+        
     def update_label(self,event):
         text = self.f_text.get("1.0", "end-1c")
         if text =="":
             messagebox.showinfo("Atenção","Digite algo para iniciar")
         else:
             self.text_history.append(text)
-            self.label_text.set("\n".join(self.text_history))
-            self.f_text.delete('1.0', END)
+
+            self.label_text.set(self.label_text.get() + "\n" + "Usuário: " + text + "\n" + "JiraBot: " + jiramain.get_response(text))
+            self.f_text.delete("1.0", END) # Limpa o Text
+            self.f_text.mark_set(INSERT, "1.0")
+
         return 'break'
+
+    def Jira_Main(self):
+            self.label_text.set("JiraBot: Seja bem vindo ao JiraBot! Faça uma pergunta para iniciar.")
+                      
 
     def delete_label(self):
         self.label_text.set("")
+        self.label_text.set("JiraBot: Seja bem vindo ao JiraBot! Faça uma pergunta para iniciar.")
 
     def generate_pdf(self):
         print("Not developed yet")
