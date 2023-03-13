@@ -9,6 +9,7 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.utils import ImageReader
 import tempfile
+from datetime import datetime
 
 import jiramain
 root = Tk()
@@ -38,9 +39,11 @@ class Application():
         
         largura_pagina = 595.27  # 21 cm em pontos (1 cm = 28.35 pontos)
         altura_pagina = 841.89  # 29.7 cm em pontos
-        pdf = canvas.Canvas('informacoes.pdf', pagesize=(largura_pagina, altura_pagina))
-        largura_disponivel = largura_pagina - 100
+        nome_arquivo = 'Relatório Simplificado' + datetime.now().strftime("%d-%m-%Y-%H-%M") + '.pdf'
 
+        pdf = canvas.Canvas(nome_arquivo, pagesize=(largura_pagina, altura_pagina))
+        largura_disponivel = largura_pagina - 100
+        
         # Decodifica os dados da imagem em base64
         image_data = base64.b64decode(self.image_jirabot)
 
@@ -82,7 +85,7 @@ class Application():
 
         # salva o arquivo PDF
         pdf.save()
-        webbrowser.open("informacoes.pdf")
+        webbrowser.open(nome_arquivo)
 
     
     def Menus(self):
