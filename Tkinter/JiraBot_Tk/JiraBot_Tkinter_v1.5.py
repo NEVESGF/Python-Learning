@@ -9,9 +9,11 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.utils import ImageReader
 import tempfile
+from datetime import datetime
 
 import jiramain
 root = Tk()
+user = ""
 
 class Application():
 
@@ -21,21 +23,30 @@ class Application():
         self.frames()
         self.widgets()
         self.Menus()
+              
         root.mainloop()
+        
 
     def janela_principal(self):
-        self.root.title("JiraBot - Seu Assistente de Jira - v1.4")
+        self.root.title("JiraBot - Seu Assistente de Jira - v1.5")
         self.root.configure(background="#e4e4e4")
         self.root.geometry("900x500")
         self.root.resizable(False,False)
-        self.root.bind("<Escape>",lambda event: self.root.destroy())
+        #self.root.bind("<Escape>",lambda event: self.root.destroy())
+        self.root.bind("<Escape>",lambda event: self.root.destroy() if messagebox.askquestion("Encerrar", "Deseja realmente encerrar o programa?", 
+                                 icon=messagebox.WARNING, 
+                                 default=messagebox.NO, 
+                                 type=messagebox.YESNO) == "yes" else "" )
+       
     def gerar_pdf(self):
         
         largura_pagina = 595.27  # 21 cm em pontos (1 cm = 28.35 pontos)
         altura_pagina = 841.89  # 29.7 cm em pontos
-        pdf = canvas.Canvas('informacoes.pdf', pagesize=(largura_pagina, altura_pagina))
-        largura_disponivel = largura_pagina - 100
+        nome_arquivo = 'Relatório Simplificado' + datetime.now().strftime("%d-%m-%Y-%H-%M") + '.pdf'
 
+        pdf = canvas.Canvas(nome_arquivo, pagesize=(largura_pagina, altura_pagina))
+        largura_disponivel = largura_pagina - 100
+        
         # Decodifica os dados da imagem em base64
         image_data = base64.b64decode(self.image_jirabot)
 
@@ -77,7 +88,7 @@ class Application():
 
         # salva o arquivo PDF
         pdf.save()
-        webbrowser.open("informacoes.pdf")
+        webbrowser.open(nome_arquivo)
 
     
     def Menus(self):
@@ -138,6 +149,8 @@ class Application():
         self.jjanela_suporte = Label(self.root3, text= "Caro usuário,\n\nObrigado por utilizar o JiraBot! Estamos sempre trabalhando para melhorar sua experiência e adicionando novos recursos. O JiraBot está em constante desenvolvimento e estamos abertos a sugestões e comentários.\n\nSe você tiver alguma dúvida ou precisar de ajuda, por favor, não hesite em nos contatar por e-mail em lcbarcat@gmail.com. Estamos sempre disponíveis para ajudar e apreciamos seus comentários.\n\nAtenciosamente, Equipe JiraBot ",wraplength=450,background="#e4e4e4",font=('Arial',11),justify='left').place(relx=0.05,rely=0.42)
         self.root3.bind("<Escape>",lambda event: self.root3.destroy())
 
+
+
     def frames(self):
         self.text_history = []
 
@@ -145,43 +158,47 @@ class Application():
         self.frame1.place(relx=0.02,rely=0.185,relwidth=0.96,relheight=0.53)
         self.label = Text(self.frame1,background="#d9d9d9")
         self.label.pack(fill='both',expand=True)
-        self.label.insert('1.0',"JiraBot: Seja bem vindo ao JiraBot! Faça uma pergunta para iniciar.")
-        self.label.configure(state='disabled')
 
-        self.scrollbar_label = Scrollbar(self.label,orient='vertical',command=self.label.yview)
+        self.label.insert('1.0',"Jirabot: Olá, seja bem vindo ao JiraBot! Como você deseja ser chamado ?")  
+
+        self.scrollbar_label = Scrollbar(root,orient='vertical',command=self.label.yview)
         self.label.configure(yscrollcommand=self.scrollbar_label.set)
-        self.scrollbar_label.pack(side='right', fill='y')
+        self.scrollbar_label.pack(fill='y')
+        self.scrollbar_label.place(relx=0.98, rely=0.185, relwidth=0.01, relheight=0.53)
+
+        self.scrollbar_xlabel = Scrollbar(root,orient='horizontal',command=self.label.xview)
+        self.label.configure(xscrollcommand=self.scrollbar_xlabel.set)
+        self.scrollbar_xlabel.place(relx=0.02, rely=0.715, relwidth=0.96, relheight=0.017)
+
 
         self.frame2 = Frame(root,border=4,bg='white')
-        Label(self.root,text='Faça sua pergunta.:',background="#e4e4e4").place(relx=0.02,rely=0.725)
-        self.frame2.place(relx=0.02,rely=0.77,relwidth=0.96,relheight=0.19)
+        Label(self.root,text='Faça sua pergunta.:',background="#e4e4e4").place(relx=0.02,rely=0.745)
+        self.frame2.place(relx=0.02,rely=0.79,relwidth=0.90,relheight=0.17)
         self.f_text = Text(self.frame2)
         self.f_text.pack(fill='both')
+           
+        self.button_send = Button(root,text="Enter\n>",command=lambda event=None:self.update_label(event),bg='white')
+        self.button_send.place(relx=0.922,rely=0.787,relheight=0.175,relwidth=0.06)
+
         self.f_text.bind("<Return>", self.update_label)
-       
+         
     def update_label(self,event):
-        self.label.insert('end',"\n")
-        current_line = str(self.label.index("insert linestart").split(".")[0]) +".0"
-        print(current_line)
+        global user
         text = self.f_text.get("1.0", "end-1c")
         if text =="":
             messagebox.showinfo("Atenção","Digite algo para iniciar")
+        elif user == "":
+            user = self.f_text.get("1.0","end-1c")
+            
+            self.label.insert('end',f"\nJiraBot: Olá {user}! Faça uma pergunta para iniciar.")
+            self.label.configure(state='disabled')
+            self.f_text.delete("1.0", END) # Limpa o Text
+            self.f_text.mark_set(INSERT, "1.0")
+            self.label.see('end')
         else:
             self.text_history.append(text)
             self.label.configure(state='normal')
-
-            self.label.insert('end',"\n\nUsuário: " + text )
-            pos = self.label.search("Usuário: ", current_line, "end")
-            pos2 = pos[0] + ".8"
-            self.label.tag_add("blue", pos , pos2 )
-            self.label.tag_config("blue", foreground="blue")
-
-            self.label.insert('end',"\n" + "JiraBot: " + jiramain.get_response(text))
-            pos3 = self.label.search("JiraBot: ", current_line, "end")
-            pos4 = pos3[0] + ".8"
-            self.label.tag_add("red", pos3 , pos4 )
-            self.label.tag_config("red", foreground="red")
-
+            self.label.insert('end',"\n" + "\n" + user + ": " + text + "\n" + "JiraBot: " + jiramain.get_response(text))
             self.f_text.delete("1.0", END) # Limpa o Text
             self.f_text.mark_set(INSERT, "1.0")
             self.label.see('end')

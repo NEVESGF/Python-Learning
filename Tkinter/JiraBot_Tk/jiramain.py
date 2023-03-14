@@ -166,9 +166,9 @@ def get_response(user_input):
     response = check_all_messages(split_message)
 
     ### Adicionando condição para que se a mensagem for respondida com até logo ele finalize o programa
-    if check_all_messages(split_message) == "Ate logo!":
-        print("Obrigado por utilizar o JiraBot.", check_all_messages(split_message))
-        exit()
+    #if check_all_messages(split_message) == "Ate logo!":
+    #    print("Obrigado por utilizar o JiraBot.", check_all_messages(split_message))
+    #    exit()
     
     with io.open("perguntas_novas.txt", "a", encoding="utf-8") as f: #cria o arquivo para armazenar as pergunta feitas pelo usuário
         f.write(user_input + "\n")  # adiciona uma nova linha depois de cada entrada
