@@ -288,7 +288,7 @@ class Application(Funcs,Relatorios):
         self.aba2.configure(background="#dfe3ee")
 
         self.abas.add(self.aba1,text = "Cadastro e Visualização")
-        self.abas.add(self.aba2, text = "Aba 2")
+        self.abas.add(self.aba2, text = "Complemento")
 
         self.abas.place(relx=0, rely=0,relwidth=0.98, relheight=0.98)
 
