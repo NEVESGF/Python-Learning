@@ -14,6 +14,14 @@ import webbrowser
 import datetime
 
 root1 = Tk()
+class GradienteFrame(Canvas):
+    def __init__(self,parent,color1 = "#C6CCFF", color2="gray35", **kwargs)
+        Canvas.__init__(self,parent,**kwargs)
+        self._color1 = color1
+        self._color2 = color2
+        self.bind("<Configure>",self._draw_gradient)
+
+
 
 class Relatorios():
     def printCliente(self):
