@@ -15,3 +15,5 @@ Semana 7: GUIs
 Semana 8: GIT, testes automatizados e revisão
 
 Semana 9: Orientações Gerais para a Avaliação
+
+Conforme plano de ensino da disciplina disponibilizado em plataforma AVA UNIVESP
